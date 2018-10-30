@@ -1,7 +1,8 @@
-#include <bits/stdc++.h>
-#include <cuda_runtime.h>
-#include <load_save.h>
-#include <blur_ops.h>
+#include<bits/stdc++.h>
+#include<cuda_runtime.h>
+#include<load_save.h>
+#include<blur_ops.h>
+#include<edged_detection.h>
 
 using namespace std;
 
@@ -46,6 +47,9 @@ int main(int argc, char **argv) {
 	if(amount % 2 == 0)
 		amount++;
 	h_out = blur_ops(d_in, numRows, numCols, amount);
+
+	edgeDetection("original.pgm");
+	edgeDetection("d_gauss.pgm");
 
 	cudaFree(d_in);
 	if(h_out != NULL)

@@ -81,10 +81,7 @@ __global__ void d_EdgeDetect(unsigned char *org, unsigned char *result, int widt
 	result [row * width + col] = sum;
 }
 
-int main(int argc, char ** argv) {
-
-	printf (" Starting program \n");
-
+void edgeDetection(char *argv) {
 
 /* ******************** setup work ***************************
 */
@@ -94,7 +91,7 @@ int main(int argc, char ** argv) {
 	unsigned char * h_pixels = NULL;
 	unsigned char * d_pixels = NULL;
 
-	char *srcPath = argv[1];
+	char *srcPath = argv;
 	char *h_ResultPath = "h_";
 	char *d_ResultPath = "d_";
 	strcat(h_ResultPath, argv[1]);
