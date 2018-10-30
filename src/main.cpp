@@ -64,7 +64,10 @@ int main(int argc, char **argv) {
     command = str.c_str();
     system(command);
 
-	edgeDetection("original.pgm");
-	edgeDetection("d_gauss.pgm");
+    const char *t1 = "original.pgm";
+    const char *t2 = "d_gauss.pgm";
+    
+	edgeDetection(t1);
+	edgeDetection(t2);
 
 }
