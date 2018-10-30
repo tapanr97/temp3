@@ -1,9 +1,0 @@
-#!/bin/bash
-
-mkdir obj
-make build
-./blur
-convert d_gauss.jpg d_gauss.pgm
-convert original.jpg original.pgm
-./edged original.pgm
-./edged d_gauss.pgm
