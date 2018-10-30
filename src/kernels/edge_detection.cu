@@ -94,9 +94,9 @@ int main(int argc, char ** argv) {
 	unsigned char * h_pixels = NULL;
 	unsigned char * d_pixels = NULL;
 
-	char * srcPath = "d_out.pgm";
-	char * h_ResultPath = "h_out_edge.pgm";
-	char * d_ResultPath = "d_out_edge.pgm";
+	char * srcPath = "d_gauss.pgm";
+	char * h_ResultPath = "h_edge.pgm";
+	char * d_ResultPath = "d_edge.pgm";
 
 	sdkLoadPGM<unsigned char>(srcPath, &h_pixels, &width , &height);
 

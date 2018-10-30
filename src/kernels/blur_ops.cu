@@ -191,7 +191,7 @@ uchar4* blur_ops(uchar4* d_inputImageRGBA, size_t numRows, size_t numCols, int b
 	
 	float gpu_ms;
 	cudaEventElapsedTime(&gpu_ms, start, stop);
-	printf("Kernel time for Gaussian Blur: %f\n", gpu_ms);
+	printf("GPU execution time for Gaussian Blur: %f\n", gpu_ms);
 
 	//cleanup memory
 	cleanup();
