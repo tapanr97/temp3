@@ -29,7 +29,6 @@ obj/edge_detection.o: src/kernels/edge_detection.cu/
 	$(NVCC) -o $@ -c $^ $(NVCC_OPTS) -I $(CUDA_HELPERS_INCLUDEPATH)
 
 build: blur edged
-	mkdir obj
 
 clean:
 	rm -f *.o photops
