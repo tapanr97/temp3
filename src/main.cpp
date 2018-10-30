@@ -62,7 +62,7 @@ int main(int argc, char **argv) {
     str = str + "d_gauss.jpg " + "d_gauss.pgm";
 
     command = str.c_str();
-    system(command)
+    system(command);
 
 	edgeDetection("original.pgm");
 	edgeDetection("d_gauss.pgm");
