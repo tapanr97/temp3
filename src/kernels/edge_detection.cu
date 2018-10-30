@@ -81,7 +81,7 @@ __global__ void d_EdgeDetect(unsigned char *org, unsigned char *result, int widt
 	result [row * width + col] = sum;
 }
 
-void edgeDetection(char *argv) {
+void edgeDetection(char *argv, char *h_res, char *d_res) {
 
 /* ******************** setup work ***************************
 */
@@ -92,12 +92,8 @@ void edgeDetection(char *argv) {
 	unsigned char * d_pixels = NULL;
 
 	char *srcPath = argv;
-	char *h_ResultPath = "h_";
-	char *d_ResultPath = "d_";
-	strcat(h_ResultPath, argv[1]);
-	strcat(h_ResultPath, "_edge.pgm");
-	strcat(d_ResultPath, argv[1]);
-	strcat(d_ResultPath,"_edge.pgm");
+	char *h_ResultPath = h_res;
+	char *d_ResultPath = d_res;
 
 	sdkLoadPGM<unsigned char>(srcPath, &h_pixels, &width , &height);
 

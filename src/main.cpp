@@ -66,8 +66,12 @@ int main(int argc, char **argv) {
 
     char *t1 = "original.pgm";
     char *t2 = "d_gauss.pgm";
+    char *t3 = "h_original_edge.pgm";
+    char *t4 = "d_original_edge.pgm";
+    char *t5 = "h_gauss_edge.pgm";
+    char *t6 = "d_gauss_edge.pgm";
 
-	edgeDetection(t1);
-	edgeDetection(t2);
+	edgeDetection(t1, t3, t4);
+	edgeDetection(t2, t5, t6);
 
 }
