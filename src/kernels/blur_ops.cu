@@ -146,6 +146,10 @@ uchar4* blur_ops(uchar4* d_inputImageRGBA, size_t numRows, size_t numCols, int b
 	d_inputImageRGBA__  = d_inputImageRGBA;
 	d_outputImageRGBA__ = d_outputImageRGBA;
 
+	cudaEvent_t start, stop;
+	cudaEventCreate(&start);
+	cudaEventCreate(&stop);
+
 	//blurred
 	unsigned char *d_redBlurred, *d_greenBlurred, *d_blueBlurred;
 	cudaMalloc(&d_redBlurred,    sizeof(unsigned char) * numPixels);
@@ -156,6 +160,8 @@ uchar4* blur_ops(uchar4* d_inputImageRGBA, size_t numRows, size_t numCols, int b
 	cudaMemset(d_blueBlurred,  0, sizeof(unsigned char) * numPixels);
 
 	allocateMemoryAndCopyToGPU(numRows, numCols, h_filter, filterWidth);
+
+	cudaEventRecord(start, 0);
 
 	//Launch a kernel for separating the RGBA image into different color channels
 	separateChannels<<<gridSize, blockSize>>>(d_inputImageRGBA, numRows, numCols, d_red,d_green, d_blue);
@@ -178,6 +184,14 @@ uchar4* blur_ops(uchar4* d_inputImageRGBA, size_t numRows, size_t numCols, int b
 	                                        numCols);
 	
 	cudaDeviceSynchronize(); 
+
+	cudaEventRecord(stop, 0);
+	
+	cudaEventSynchronize(stop);
+	
+	float gpu_ms;
+	cudaEventElapsedTime(&gpu_ms, start, stop);
+	printf("Kernel time for Gaussian Blur: %f\n", gpu_ms);
 
 	//cleanup memory
 	cleanup();

@@ -22,7 +22,7 @@ uchar4* load_image_in_GPU(string filename) {
 int hex_to_int(string hexStr) {
 	int i;
 	stringstream ss;
-    	ss << std::hex << hexStr;
+    ss << std::hex << hexStr;
 	ss >> i;
 	return i;
 }
