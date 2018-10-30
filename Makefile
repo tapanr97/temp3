@@ -25,7 +25,7 @@ obj/load_save.o: src/util/load_save.cpp
 obj/blur_ops.o: src/kernels/blur_ops.cu
 	$(NVCC) -o $@ -c $^ $(NVCC_OPTS) -I $(C_INCLUDEPATH)
 
-obj/edge_detection.o: src/kernels/edge_detection.cu/
+obj/edge_detection.o: src/kernels/edge_detection.cu
 	$(NVCC) -o $@ -c $^ $(NVCC_OPTS) -I $(CUDA_HELPERS_INCLUDEPATH)
 
 build: blur edged
