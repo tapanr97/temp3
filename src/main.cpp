@@ -48,11 +48,23 @@ int main(int argc, char **argv) {
 		amount++;
 	h_out = blur_ops(d_in, numRows, numCols, amount);
 
-	edgeDetection("original.pgm");
-	edgeDetection("d_gauss.pgm");
-
 	cudaFree(d_in);
 	if(h_out != NULL)
 		saveImageRGBA(h_out, output_file, numRows, numCols);
+
+	string str = "convert "; 
+    str = str + "original.jpg " + "original.pgm";
+
+    const char *command = str.c_str();
+    system(command);
+
+	string str = "convert "; 
+    str = str + "d_gauss.jpg " + "d_gauss.pgm";
+
+    command = str.c_str();
+    system(command)
+
+	edgeDetection("original.pgm");
+	edgeDetection("d_gauss.pgm");
 
 }
