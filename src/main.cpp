@@ -2,7 +2,7 @@
 #include<cuda_runtime.h>
 #include<load_save.h>
 #include<blur_ops.h>
-#include<edged_detection.h>
+#include<edge_detection.h>
 
 using namespace std;
 
