@@ -4,8 +4,8 @@
 # include <string.h>
 # include <math.h>
 # include <cuda.h>
-# include <helper_image.h>
 # include <ctime>
+# include <helper_image.h>
 
 unsigned int width , height ;
 

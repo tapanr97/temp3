@@ -7,8 +7,9 @@ NVCC=nvcc
 
 OPENCV_LIBPATH = /usr/local/lib
 OPENCV_INCLUDEPATH = /usr/local/include
-
 CUDA_INCLUDEPATH = /usr/local/cuda-9.0/include
+
+CUDA_HELPERS_INCLUDEPATH = inc
 
 NVCC_OPTS = -Xcompiler -m64 -Wno-deprecated-gpu-targets `pkg-config --cflags --libs opencv`
 GCC_OPTS = -m64 `pkg-config --cflags --libs opencv`
@@ -30,8 +31,8 @@ load_save.o: load_save.cpp load_save.h
 blur_ops.o: blur_ops.cu load_save.h blur_ops.h
 	$(NVCC) -c blur_ops.cu $(NVCC_OPTS)
 
-edge_detection.o: edge_detection.cu inc/helper_image.h
-	$(NVCC) -c edge_detection.cu $(NVCC_OPTS)
+edge_detection.o: edge_detection.cu inc/*.h
+	$(NVCC) -c edge_detection.cu $(NVCC_OPTS) -I $(CUDA_HELPERS_INCLUDEPATH)
 
 clean:
 	rm -f *.o photops
