@@ -3,4 +3,5 @@
 mkdir obj
 make build
 ./blur
+convert d_gauss.jpg d_gauss.pgm
 ./edged

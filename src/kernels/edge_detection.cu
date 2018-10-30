@@ -94,9 +94,9 @@ int main(int argc, char ** argv) {
 	unsigned char * h_pixels = NULL;
 	unsigned char * d_pixels = NULL;
 
-	char * srcPath = "d_gauss.pgm";
-	char * h_ResultPath = "h_edge.pgm";
-	char * d_ResultPath = "d_edge.pgm";
+	char *srcPath = argv[1];
+	char *h_ResultPath = argv[1] + "edge.pgm";
+	char *d_ResultPath = argv[1] + "edge.pgm";
 
 	sdkLoadPGM<unsigned char>(srcPath, &h_pixels, &width , &height);
 
@@ -114,16 +114,14 @@ int main(int argc, char ** argv) {
 	************************* */
 	clock_t starttime , endtime , difference;
 
-	printf("Starting host processing \n");
 	starttime = clock();
 	h_EdgeDetect(h_pixels , h_resultPixels);
 	endtime = clock();
-	printf("Completed host processing \n");
 
 	difference = (endtime - starttime);
 
 	double interval = difference / (double)CLOCKS_PER_SEC;
-	printf ("CPU execution time = %f ms\n", interval * 1000);
+	printf ("CPU execution time for edge detection = %f ms\n", interval * 1000);
 	sdkSavePGM<unsigned char> (h_ResultPath, h_resultPixels, width, height);
 	/* ************************ END Host processing
 	************************* */
@@ -134,12 +132,20 @@ int main(int argc, char ** argv) {
 	dim3 grid(width / 16, height / 16);
 	unsigned int timer = 0;
 
-	printf ("Invoking Kernel \n");
+	cudaEvent_t start, stop;
+	cudaEventCreate(&start);
+	cudaEventCreate(&stop);
 
 	/* CUDA method */
 	d_EdgeDetect <<< grid, block >>>(d_pixels, d_resultPixels, width, height);
 	cudaThreadSynchronize();
-	printf ("Completed Kernel \n");
+
+	cudaEventRecord(stop, 0);
+	cudaEventSynchronize(stop);
+	
+	float gpu_ms;
+	cudaEventElapsedTime(&gpu_ms, start, stop);
+	printf("GPU execution time for Edge Detection: %f ms\n", gpu_ms);
 
 	cudaMemcpy(h_resultPixels, d_resultPixels, ImageSize, cudaMemcpyDeviceToHost);
 	sdkSavePGM<unsigned char>(d_ResultPath, h_resultPixels, width, height);
