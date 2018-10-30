@@ -36,8 +36,8 @@ uchar4 hex_to_uchar4_color(string& color) {
 
 int main(int argc, char **argv) {
 
-	string input_file = "gpu.jpg";
-	string output_file = "d_out.jpg";
+	string input_file = "original.jpg";
+	string output_file = "d_gauss.jpg";
 	uchar4 *d_in = load_image_in_GPU(input_file);
 	uchar4 *h_out = NULL;
 
