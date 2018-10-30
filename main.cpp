@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 #include <cuda_runtime.h>
-#include "load_save.h"
-#include "blur_ops.h"
+#include <load_save.h>
+#include <blur_ops.h>
 
 using namespace std;
 
