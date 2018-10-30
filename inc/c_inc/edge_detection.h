@@ -1,5 +1,5 @@
-#ifndef BLUR_OPS_H__
-#define BLUR_OPS_H__
+#ifndef EDGE_DETECTION_H__
+#define EDGE_DETECTION_H__
 
 void edgeDetection(char *argv);
 

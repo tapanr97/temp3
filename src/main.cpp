@@ -58,7 +58,7 @@ int main(int argc, char **argv) {
     const char *command = str.c_str();
     system(command);
 
-	string str = "convert "; 
+	str = "convert "; 
     str = str + "d_gauss.jpg " + "d_gauss.pgm";
 
     command = str.c_str();
