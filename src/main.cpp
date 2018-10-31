@@ -37,13 +37,13 @@ uchar4 hex_to_uchar4_color(string& color) {
 
 int main(int argc, char **argv) {
 
-	string input_file = "original.jpg";
-	string output_file = "d_gauss.jpg";
+	string input_file = "original_100.jpg";
+	string output_file = "d_gauss_100.jpg";
 	uchar4 *d_in = load_image_in_GPU(input_file);
 	uchar4 *h_out = NULL;
 
 	// Performing the required operation
-	int amount = 20;
+	int amount = 10;
 	if(amount % 2 == 0)
 		amount++;
 	h_out = blur_ops(d_in, numRows, numCols, amount);
@@ -53,23 +53,23 @@ int main(int argc, char **argv) {
 		saveImageRGBA(h_out, output_file, numRows, numCols);
 
 	string str = "convert "; 
-    str = str + "original.jpg " + "original.pgm";
+    str = str + "original_100.jpg " + "original_100.pgm";
 
     const char *command = str.c_str();
     system(command);
 
 	str = "convert "; 
-    str = str + "d_gauss.jpg " + "d_gauss.pgm";
+    str = str + "d_gauss_100.jpg " + "d_gauss_100.pgm";
 
     command = str.c_str();
     system(command);
 
-    char *t1 = "original.pgm";
-    char *t2 = "d_gauss.pgm";
-    char *t3 = "h_original_edge.pgm";
-    char *t4 = "d_original_edge.pgm";
-    char *t5 = "h_gauss_edge.pgm";
-    char *t6 = "d_gauss_edge.pgm";
+    char *t1 = "original_100.pgm";
+    char *t2 = "d_gauss_100.pgm";
+    char *t3 = "h_original_100_edge_50.pgm";
+    char *t4 = "d_original_100_edge_50.pgm";
+    char *t5 = "h_gauss_100_edge_50.pgm";
+    char *t6 = "d_gauss_100_edge_50.pgm";
 
 	edgeDetection(t1, t3, t4);
 	edgeDetection(t2, t5, t6);
