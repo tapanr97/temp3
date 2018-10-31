@@ -4,29 +4,34 @@ mkdir obj
 prev=20
 prev_d=gauss
 op=original
-ope=edge
+ope="_edge"
 
-for x in 10 20 30 40 50
+for i in 10 20 30 40 50 60 70 80 90 100
 do
-	for i in 10 20 30 40 50 60 70 80 90
+	op_n="original_$i"
+	gauss_n="gauss_$i"
+	sed "s/${prev_d}/${gauss_n}/g" src/main.cpp -i
+	sed "s/${op}/${op_n}/g" src/main.cpp -i
+
+	for x in 10 20 30 40 50
 	do
 		echo "size=$i and amount=$x\n" >> ../out
 		amount_o="amount = $prev"
 		amount_n="amount = $x"
-		gauss_n="gauss_$x"
-		op_n="original_$i"
-		ope_n="edge_$x"
-		sed "s/${op}/${op_n}/g" src/main.cpp -i
-		sed "s/${prev_d}/${gauss_n}/g" src/main.cpp -i
+		ope_n="_edge_$x"
 		sed "s/${amount_o}/${amount_n}/g" src/main.cpp -i
 		sed "s/${ope}/${ope_n}/g" src/main.cpp -i
 		make
 		./blur >> ../out
-		op="$op_n"
 		ope="$ope_n"
 	done
 
-	prev_d="gauss_$x"
-	prev=$x
+	prev_d="$gauss_n"
+	op="$op_n"
 
 done
+
+sed 's/origianl_100/original/g' src/main.cpp -i
+sed 's/amount = 50/amount = 20/g' src/main.cpp -i
+sed 's/gauss_50/gauss/g' src/main.cpp -i
+sed 's/_edge_50/_edge' src/main.cpp -i
