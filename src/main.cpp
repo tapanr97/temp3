@@ -38,15 +38,12 @@ uchar4 hex_to_uchar4_color(string& color) {
 int main(int argc, char **argv) {
 
 	string input_file = "original.jpg";
+	string output_file = "d_gauss.jpg";
 	uchar4 *d_in = load_image_in_GPU(input_file);
 	uchar4 *h_out = NULL;
 
 	// Performing the required operation
 	int amount = 20;
-
-	string tt = to_string(amount);
-	string output_file = std::string("d_gauss_bam_") + tt + ".jpg";
-
 	if(amount % 2 == 0)
 		amount++;
 	h_out = blur_ops(d_in, numRows, numCols, amount);
@@ -68,7 +65,7 @@ int main(int argc, char **argv) {
     system(command);
 
     char *t1 = "original.pgm";
-    char *t2 = output_file.c_str();
+    char *t2 = "d_gauss.pgm";
     char *t3 = "h_original_edge.pgm";
     char *t4 = "d_original_edge.pgm";
     char *t5 = "h_gauss_edge.pgm";
