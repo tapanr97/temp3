@@ -45,7 +45,7 @@ int main(int argc, char **argv) {
 	int amount = 20;
 
 	string tt = to_string(amount);
-	string output_file = "d_gauss""_bam_" tt ".jpg";
+	string output_file = std::string("d_gauss_bam_") + tt + ".jpg";
 
 	if(amount % 2 == 0)
 		amount++;
