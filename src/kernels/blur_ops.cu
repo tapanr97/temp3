@@ -11,6 +11,8 @@ __global__ void gaussian_blur(const unsigned char* const inputChannel,
                    unsigned char* const outputChannel,
                    int numRows, int numCols, const float* const filter, const int filterWidth) {
   
+//	__shared__ float d_filter[filterWidth * filterWidth];	
+
 	int col = blockIdx.x * blockDim.x + threadIdx.x;
 	int row = blockIdx.y * blockDim.y + threadIdx.y;
 	if ( col >= numCols || row >= numRows )
@@ -127,13 +129,13 @@ void setFilter(float **h_filter, int *filterWidth, int blurKernelWidth, float bl
 uchar4* blur_ops(uchar4* d_inputImageRGBA, size_t numRows, size_t numCols, int blurKernelWidth) { 
 	
 	float blurKernelSigma = blurKernelWidth/4.0f;
-  	//Set filter array
+	//Set filter array
 	float* h_filter;
 	int filterWidth;
 	setFilter(&h_filter, &filterWidth, blurKernelWidth, blurKernelSigma);
 
 	//Set reasonable block size (i.e., number of threads per block)
-	const dim3 blockSize(16,16,1);
+	const dim3 blockSize(32,32,1);
 	//Calculate Grid SIze
 	int a=numCols/blockSize.x, b=numRows/blockSize.y;	
 	const dim3 gridSize(a+1,b+1,1);
