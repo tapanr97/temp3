@@ -3,6 +3,8 @@
 mkdir obj
 prev=20
 prev_d=gauss
+op=original
+ope=edge
 
 for x in 10 20 30 40 50
 do
@@ -12,13 +14,16 @@ do
 		amount_o="amount = $prev"
 		amount_n="amount = $x"
 		gauss_n="gauss_$x"
-		git checkout test-$i
+		op_n="original_$i"
+		ope_n="edge_$x"
+		sed "s/${op}/${op_n}/g" src/main.cpp -i
 		sed "s/${prev_d}/${gauss_n}/g" src/main.cpp -i
 		sed "s/${amount_o}/${amount_n}/g" src/main.cpp -i
+		sed "s/${ope}/${ope_n}/g" src/main.cpp -i
 		make
 		./blur >> ../out
-		git add --all
-		git commit -m "$x"
+		op="$op_n"
+		ope="$ope_n"
 	done
 
 	prev_d="gauss_$x"
