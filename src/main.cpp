@@ -68,7 +68,7 @@ int main(int argc, char **argv) {
     system(command);
 
     char *t1 = "original.pgm";
-    char *t2 = c_str(output_file);
+    char *t2 = output_file.c_str();
     char *t3 = "h_original_edge.pgm";
     char *t4 = "d_original_edge.pgm";
     char *t5 = "h_gauss_edge.pgm";
