@@ -133,6 +133,8 @@ void edgeDetection(char *argv, char *h_res, char *d_res) {
 	cudaEventCreate(&start);
 	cudaEventCreate(&stop);
 
+	cudaEventRecord(start, 0);	
+
 	/* CUDA method */
 	d_EdgeDetect <<< grid, block >>>(d_pixels, d_resultPixels, width, height);
 	cudaThreadSynchronize();
