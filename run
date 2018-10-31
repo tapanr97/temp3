@@ -2,13 +2,15 @@
 
 mkdir obj
 prev=20
-prev_d="d_gauss"
+prev_d=gauss
 op=original
 ope="_edge"
 
 for i in 10 20 30 40 50 60 70 80 90 100
 do
 	op_n="original_$i"
+	gauss_n="gauss_$i"
+	sed "s/${prev_d}/${gauss_n}/g" src/main.cpp -i
 	sed "s/${op}/${op_n}/g" src/main.cpp -i
 
 	for x in 10 20 30 40 50
@@ -16,14 +18,12 @@ do
 		echo "size=$i and amount=$x\n" >> ../out
 		amount_o="amount = $prev"
 		amount_n="amount = $x"
-		ope_n="_edge_$x"
-		gauss_n="d_gauss_$i_amount_$x"
-		sed "s/${prev_d}/${gauss_n}/g" src/main.cpp -i
 		sed "s/${amount_o}/${amount_n}/g" src/main.cpp -i
 		sed "s/${ope}/${ope_n}/g" src/main.cpp -i
 		make
 		./blur >> ../out
 		ope="$ope_n"
+		cp d_gauss*.jpg "../Results/$x"
 	done
 
 	prev_d="$gauss_n"
