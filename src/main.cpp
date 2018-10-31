@@ -44,7 +44,7 @@ int main(int argc, char **argv) {
 	// Performing the required operation
 	int amount = 20;
 
-	string output_file = "d_gauss" + "bam_" + to_string(amount) +".jpg";
+	string output_file = "d_gauss""_bam_"to_string(amount)".jpg";
 
 	if(amount % 2 == 0)
 		amount++;
