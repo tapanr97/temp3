@@ -18,6 +18,7 @@ do
 		echo "size=$i and amount=$x\n" >> ../out
 		amount_o="amount = $prev"
 		amount_n="amount = $x"
+		ope_n="_edge_$x"
 		sed "s/${amount_o}/${amount_n}/g" src/main.cpp -i
 		sed "s/${ope}/${ope_n}/g" src/main.cpp -i
 		make
