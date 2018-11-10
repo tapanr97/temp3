@@ -30,7 +30,7 @@ __global__ void gaussian_blur(const unsigned char* const inputChannel,
 			int image_c = min(max(col + filter_c, 0), static_cast<int>(numCols - 1));
 
 			float image_value = static_cast<float>(inputChannel[image_r * numCols + image_c]);
-			float filter_value = c_filter[(filter_r + filterWidth/2) * filterWidth + filter_c + filterWidth/2];
+			float filter_value = filter[(filter_r + filterWidth/2) * filterWidth + filter_c + filterWidth/2];
 
 			result += image_value * filter_value;
 		}
