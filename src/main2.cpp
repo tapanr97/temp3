@@ -54,26 +54,26 @@ int main(int argc, char **argv) {
 	if(h_out != NULL)
 		saveImageRGBA(h_out, output_file, numRows, numCols);
 
-//	string str = "convert ";
-  //  str = str + argv[1] + " " + argv[3];
+	string str = "convert ";
+    str = str + argv[1] + " " + argv[3];
 
- //   const char *command = str.c_str();
-  //  system(command);
-//
-//	str = "convert ";
-   // str = str + "d_gauss.jpg " + "d_gauss.pgm";
+    const char *command = str.c_str();
+    system(command);
 
-   // command = str.c_str();
-   // system(command);
+	str = "convert ";
+    str = str + "d_gauss.jpg " + "d_gauss.pgm";
 
- //   char *t1 = argv[3];
-  //  char *t2 = "d_gauss.pgm";
-   // char *t3 = "h_original_edge.pgm";
-    //char *t4 = "d_original.pgm";
-   // char *t5 = "h_gauss_edge.pgm";
-  //  char *t6 = "d_gauss_edge.pgm";
+    command = str.c_str();
+    system(command);
 
-//	edgeDetection(t1, t3, t4);
-//	edgeDetection(t2, t5, t6);
+    char *t1 = argv[3];
+    char *t2 = "d_gauss.pgm";
+    char *t3 = "h_original_edge.pgm";
+    char *t4 = "d_original.pgm";
+    char *t5 = "h_gauss_edge.pgm";
+    char *t6 = "d_gauss_edge.pgm";
+
+	edgeDetection(t1, t3, t4);
+	edgeDetection(t2, t5, t6);
 
 }

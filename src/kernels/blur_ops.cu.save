@@ -6,7 +6,6 @@ float *d_filter;
 uchar4 *d_inputImageRGBA__;
 uchar4 *d_outputImageRGBA__;
 float *h_filter__;
-__constant__ float c_filter[2700];
 
 __global__ void gaussian_blur(const unsigned char* const inputChannel,
                    unsigned char* const outputChannel,
@@ -30,7 +29,7 @@ __global__ void gaussian_blur(const unsigned char* const inputChannel,
 			int image_c = min(max(col + filter_c, 0), static_cast<int>(numCols - 1));
 
 			float image_value = static_cast<float>(inputChannel[image_r * numCols + image_c]);
-			float filter_value = c_filter[(filter_r + filterWidth/2) * filterWidth + filter_c + filterWidth/2];
+			float filter_value = filter[(filter_r + filterWidth/2) * filterWidth + filter_c + filterWidth/2];
 
 			result += image_value * filter_value;
 		}
@@ -134,7 +133,6 @@ uchar4* blur_ops(uchar4* d_inputImageRGBA, size_t numRows, size_t numCols, int b
 	float* h_filter;
 	int filterWidth;
 	setFilter(&h_filter, &filterWidth, blurKernelWidth, blurKernelSigma);
-	cudaMemcpyToSymbol(c_filter, h_filter, sizeof(float) * filterWidth * filterWidth);
 
 	//Set reasonable block size (i.e., number of threads per block)
 	const dim3 blockSize(32,32,1);
@@ -164,10 +162,9 @@ uchar4* blur_ops(uchar4* d_inputImageRGBA, size_t numRows, size_t numCols, int b
 	cudaMemset(d_blueBlurred,  0, sizeof(unsigned char) * numPixels);
 
 	allocateMemoryAndCopyToGPU(numRows, numCols, h_filter, filterWidth);
+
 	cudaEventRecord(start, 0);
 
-	//Launch a kernel for separating the RGBA image into different color channels
-	separateChannels<<<gridSize, blockSize>>>(d_inputImageRGBA, numRows, numCols, d_red,d_green, d_blue);
 
 	cudaDeviceSynchronize(); 
 
@@ -175,7 +172,6 @@ uchar4* blur_ops(uchar4* d_inputImageRGBA, size_t numRows, size_t numCols, int b
 	gaussian_blur<<<gridSize, blockSize>>>(d_red, d_redBlurred, numRows, numCols,  d_filter, filterWidth);
 	gaussian_blur<<<gridSize, blockSize>>>(d_green, d_greenBlurred, numRows, numCols,  d_filter, filterWidth);
 	gaussian_blur<<<gridSize, blockSize>>>(d_blue, d_blueBlurred, numRows, numCols,  d_filter, filterWidth);
-
 
 	cudaDeviceSynchronize(); 
 
@@ -190,8 +186,8 @@ uchar4* blur_ops(uchar4* d_inputImageRGBA, size_t numRows, size_t numCols, int b
 	cudaDeviceSynchronize(); 
 
 	cudaEventRecord(stop, 0);
-	cudaEventSynchronize(stop);
 	
+	cudaEventSynchronize(stop);
 	
 	float gpu_ms;
 	cudaEventElapsedTime(&gpu_ms, start, stop);
